@@ -7,6 +7,7 @@ public class GridCellHoverHighlight : MonoBehaviour
 {
     public float highlightHeight = 5.6f;
     public Transform playerTransform;
+    private PlayerMovement player;
 
     public GameObject validCellHighlight;
     public GameObject invalidCellHighlight;
@@ -14,11 +15,21 @@ public class GridCellHoverHighlight : MonoBehaviour
     private Vector3 lastGridPosition;
     private GameObject lastSpawnedHighlight;
 
-    // Update is called once per frame
+    void Start()
+    {
+        player = playerTransform.gameObject.GetComponent<PlayerMovement>();
+    }
+
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+        if (player.IsMoving())
+        {
+            DestroyLastHighlight();
+        }
+        else
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit) && !player.IsMoving())
             {
                 Vector3 clickedPosition = hit.point;
                 Vector3 gridPosition = new(
@@ -35,11 +46,20 @@ public class GridCellHoverHighlight : MonoBehaviour
                 else if (gridPosition != lastGridPosition)
                 {
                     DestroyLastHighlight();
-                    lastSpawnedHighlight = Instantiate(validCellHighlight, gridPosition, Quaternion.identity);
+
+                    if (player.MovementIsValid(gridPosition))
+                    {
+                        lastSpawnedHighlight = Instantiate(validCellHighlight, gridPosition, Quaternion.identity);
+                    }
+                    else
+                    {
+                        lastSpawnedHighlight = Instantiate(invalidCellHighlight, gridPosition, Quaternion.identity);
+                    }
                 }
 
                 lastGridPosition = gridPosition;
             }
+        }
     }
 
     void DestroyLastHighlight()
