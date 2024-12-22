@@ -32,14 +32,13 @@ public class GridCellHoverHighlight : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit) && !player.IsMoving())
             {
                 Vector3 clickedPosition = hit.point;
-                Vector3 gridPosition = new(
-                    Mathf.Round(clickedPosition.x),
-                    highlightHeight,
-                    Mathf.Round(clickedPosition.z)
-                );
+                Vector3 gridPosition = Utilities.AlignToGrid(clickedPosition, highlightHeight);
 
                 /// Don't show highlight on the cell the player is on
-                if (gridPosition.x == playerTransform.position.x && gridPosition.z == playerTransform.position.z)
+                if (
+                    gridPosition.x == playerTransform.position.x
+                    && gridPosition.z == playerTransform.position.z
+                )
                 {
                     DestroyLastHighlight();
                 }
@@ -49,11 +48,19 @@ public class GridCellHoverHighlight : MonoBehaviour
 
                     if (player.MovementIsValid(gridPosition))
                     {
-                        lastSpawnedHighlight = Instantiate(validCellHighlight, gridPosition, Quaternion.identity);
+                        lastSpawnedHighlight = Instantiate(
+                            validCellHighlight,
+                            gridPosition,
+                            Quaternion.identity
+                        );
                     }
                     else
                     {
-                        lastSpawnedHighlight = Instantiate(invalidCellHighlight, gridPosition, Quaternion.identity);
+                        lastSpawnedHighlight = Instantiate(
+                            invalidCellHighlight,
+                            gridPosition,
+                            Quaternion.identity
+                        );
                     }
                 }
 

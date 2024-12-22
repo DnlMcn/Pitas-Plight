@@ -26,7 +26,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckForMoveCommand()
     {
-        if (isMoving) return;
+        if (isMoving)
+            return;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -36,21 +37,12 @@ public class PlayerMovement : MonoBehaviour
                 print(hit.point);
 
                 Vector3 clickedPosition = hit.point;
-                Vector3 gridPosition = new(
-                    Mathf.Round(clickedPosition.x),
-                    height,
-                    Mathf.Round(clickedPosition.z)
-                );
+                Vector3 gridPosition = Utilities.AlignToGrid(clickedPosition, height);
 
-                // Start moving the player to the clicked position
                 if (gridPosition != transform.position && MovementIsValid(gridPosition))
                 {
                     StartCoroutine(MovePlayer(gridPosition));
                 }
-            }
-            else
-            {
-                print("No collision detected");
             }
         }
     }
@@ -67,13 +59,12 @@ public class PlayerMovement : MonoBehaviour
 
     public bool MovementIsValid(Vector3 targetPosition)
     {
-        Vector3 normalizedPosition = new(transform.position.x, 0, transform.position.z);
-        Vector3 normalizedTargetPosition = new(targetPosition.x, 0, targetPosition.z);
-        float distance = Vector3.Distance(normalizedPosition, normalizedTargetPosition);
+        int currentX = Mathf.RoundToInt(transform.position.x);
+        int currentZ = Mathf.RoundToInt(transform.position.z);
+        int targetX = Mathf.RoundToInt(targetPosition.x);
+        int targetZ = Mathf.RoundToInt(targetPosition.z);
 
-        print("my position: " + normalizedPosition);
-        print("target: " + normalizedTargetPosition);
-        print("distance: " + distance);
+        int distance = Mathf.Abs(targetX - currentX) + Mathf.Abs(targetZ - currentZ);
 
         return distance <= maxMoveDistance;
     }
@@ -82,17 +73,47 @@ public class PlayerMovement : MonoBehaviour
     {
         isMoving = true;
 
+        Vector3 startingPosition = Utilities.AlignToGrid(transform.position);
+        Vector3 targetPosition = Utilities.AlignToGrid(newTargetPosition);
+
+        while (Mathf.Abs(targetPosition.x - startingPosition.x) > 0.01f)
+        {
+            Vector3 nextStep = new(
+                Mathf.MoveTowards(startingPosition.x, targetPosition.x, 1),
+                startingPosition.y,
+                startingPosition.z
+            );
+
+            yield return StartCoroutine(StepToPosition(startingPosition, nextStep));
+            startingPosition = nextStep;
+        }
+
+        while (Mathf.Abs(targetPosition.z - startingPosition.z) > 0.01f)
+        {
+            Vector3 nextStep = new(
+                startingPosition.x,
+                startingPosition.y,
+                Mathf.MoveTowards(startingPosition.z, targetPosition.z, 1)
+            );
+
+            yield return StartCoroutine(StepToPosition(startingPosition, nextStep));
+            startingPosition = nextStep;
+        }
+
+        isMoving = false;
+    }
+
+    private IEnumerator StepToPosition(Vector3 startPosition, Vector3 endPosition)
+    {
         float elapsedTime = 0;
-        Vector3 startingPosition = transform.position;
 
         while (elapsedTime < moveTime)
         {
-            transform.position = Vector3.Lerp(startingPosition, newTargetPosition, elapsedTime / moveTime);
+            transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / moveTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        transform.position = newTargetPosition;
-        isMoving = false;
+        transform.position = endPosition;
     }
 }
