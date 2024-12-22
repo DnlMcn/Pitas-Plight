@@ -78,3 +78,4 @@ crashlytics-build.properties
 # Exclude Collaborate files
 *.collabignore
 *.collab
+UserSettings/Layouts/default-2022.dwlt
