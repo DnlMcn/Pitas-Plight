@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Vector3 startingPosition = new(3f, 1.5f, -3f);
-    float height = 1.5f;
+    Vector3 startingPosition = new(2f, 1.3f, -3f);
+    float height = 1.3f;
 
     float moveTime = 0.2f;
     private bool isMoving = false;
@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
+                print(hit.point);
+
                 Vector3 clickedPosition = hit.point;
                 Vector3 gridPosition = new(
                     Mathf.Round(clickedPosition.x),
@@ -42,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
                 {
                     StartCoroutine(MovePlayer(gridPosition));
                 }
+            }
+            else
+            {
+                print("No collision detected");
             }
         }
     }
