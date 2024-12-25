@@ -7,7 +7,7 @@ public class GridCellHoverHighlight : MonoBehaviour
 {
     public float highlightHeight = 5.6f;
     public Transform playerTransform;
-    private PlayerMovement player;
+    private Player player;
 
     public GameObject validCellHighlight;
     public GameObject invalidCellHighlight;
@@ -17,7 +17,9 @@ public class GridCellHoverHighlight : MonoBehaviour
 
     void Start()
     {
-        player = playerTransform.gameObject.GetComponent<PlayerMovement>();
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        playerTransform = playerObject.transform;
+        player = playerObject.GetComponent<Player>();
     }
 
     void Update()
@@ -46,7 +48,7 @@ public class GridCellHoverHighlight : MonoBehaviour
                 {
                     DestroyLastHighlight();
 
-                    if (player.MovementIsValid(gridPosition))
+                    if (Utilities.MovementIsValid(transform.position, gridPosition, player.MaxMoveDistance()))
                     {
                         lastSpawnedHighlight = Instantiate(
                             validCellHighlight,
