@@ -10,11 +10,13 @@ public class Player : MonoBehaviour
     Vector3 startingPosition = new(2f, 1.3f, -3f);
 
     private Movement movement;
+    private new Camera camera;
 
     private void Start()
     {
+        camera = Utilities.GetMainCamera();
         movement = GetComponent<Movement>();
-        transform.position = startingPosition;
+        // transform.position = startingPosition;
     }
 
     private void Update()
@@ -29,13 +31,17 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                print(hit.point);
+            Vector3 mousePosition = Input.mousePosition;
+            Ray ray = camera.ScreenPointToRay(mousePosition);
+            RaycastHit hitInfo;
 
-                Vector3 clickedPosition = hit.point;
-                Vector3 gridPosition = Utilities.AlignToGrid(clickedPosition);
+            Vector3 hitPoint = Vector3.zero;
+            int groundLayerMask = LayerMask.GetMask("Ground");
+
+            if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, groundLayerMask))
+            {
+                hitPoint = hitInfo.point;
+                Vector3 gridPosition = Utilities.AlignToGrid(hitPoint, transform.position.y);
 
                 if (gridPosition != transform.position && Utilities.MovementIsValid(transform.position, gridPosition, movement.maxMoveDistance))
                 {

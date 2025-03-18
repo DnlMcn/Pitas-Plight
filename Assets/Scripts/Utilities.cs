@@ -2,6 +2,8 @@ using UnityEngine;
 
 public static class Utilities
 {
+    static float gridHeight = 0; 
+
     /// <summary>
     /// Rounds a Vector3 to the nearest grid-aligned position.
     /// </summary>
@@ -66,5 +68,18 @@ public static class Utilities
         {
             return false;
         }
+    }
+
+    public static Vector3 OrthographicMouseGridPosition(Camera camera)
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = Mathf.Abs(camera.transform.position.y - gridHeight);
+        Vector3 worldPosition = camera.ScreenToWorldPoint(mousePosition);
+        return AlignToGrid(worldPosition, gridHeight);
+    }
+
+    public static Camera GetMainCamera()
+    {
+        return GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
     }
 }

@@ -13,7 +13,6 @@ public class ChargerEnemy : MonoBehaviour
     void Start()
     {
         playerTransform = GameObject.FindWithTag("Player").transform;
-        movement = GetComponent<Movement>();
     }
 
     void Update()

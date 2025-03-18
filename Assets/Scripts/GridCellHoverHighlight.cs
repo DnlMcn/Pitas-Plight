@@ -8,6 +8,7 @@ public class GridCellHoverHighlight : MonoBehaviour
     public float highlightHeight = 5.6f;
     public Transform playerTransform;
     private Player player;
+    private new Camera camera;
 
     public GameObject validCellHighlight;
     public GameObject invalidCellHighlight;
@@ -20,6 +21,7 @@ public class GridCellHoverHighlight : MonoBehaviour
         GameObject playerObject = GameObject.FindWithTag("Player");
         playerTransform = playerObject.transform;
         player = playerObject.GetComponent<Player>();
+        camera = Utilities.GetMainCamera();
     }
 
     void Update()
@@ -30,11 +32,17 @@ public class GridCellHoverHighlight : MonoBehaviour
         }
         else
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit) && !player.IsMoving())
+            Vector3 mousePosition = Input.mousePosition;
+            Ray ray = camera.ScreenPointToRay(mousePosition);
+            RaycastHit hitInfo;
+
+            Vector3 hitPoint = Vector3.zero;
+            int groundLayerMask = LayerMask.GetMask("Ground");
+
+            if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, groundLayerMask))
             {
-                Vector3 clickedPosition = hit.point;
-                Vector3 gridPosition = Utilities.AlignToGrid(clickedPosition, highlightHeight);
+                hitPoint = hitInfo.point;
+                Vector3 gridPosition = Utilities.AlignToGrid(hitPoint, highlightHeight);
 
                 /// Don't show highlight on the cell the player is on
                 if (
