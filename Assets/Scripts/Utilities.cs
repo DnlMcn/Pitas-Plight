@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public static class Utilities
@@ -58,11 +59,11 @@ public static class Utilities
     {
         if (FloatsEq(self.x, other.x))
         {
-            return Mathf.Abs(self.x - other.x) <= range;
+            return Mathf.Abs(self.z - other.z) <= range;
         }
-        else if (FloatsEq(self.y, other.y))
+        else if (FloatsEq(self.z, other.z))
         {
-            return Mathf.Abs(self.y - other.y) <= range;
+            return Mathf.Abs(self.x - other.x) <= range;
         }
         else
         {
@@ -70,16 +71,13 @@ public static class Utilities
         }
     }
 
-    public static Vector3 OrthographicMouseGridPosition(Camera camera)
-    {
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = Mathf.Abs(camera.transform.position.y - gridHeight);
-        Vector3 worldPosition = camera.ScreenToWorldPoint(mousePosition);
-        return AlignToGrid(worldPosition, gridHeight);
-    }
-
     public static Camera GetMainCamera()
     {
         return GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+    }
+
+    public static IEnumerator Wait(float seconds = 1f)
+    {
+        yield return new WaitForSeconds(seconds);
     }
 }

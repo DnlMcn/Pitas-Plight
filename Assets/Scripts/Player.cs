@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -11,6 +6,8 @@ public class Player : MonoBehaviour
 
     private Movement movement;
     private new Camera camera;
+    private bool outOfTurn = false;
+    public GameEvent endPlayerTurn;
 
     private void Start()
     {
@@ -24,9 +21,22 @@ public class Player : MonoBehaviour
         CheckForMoveCommand();
     }
 
+    public void EndTurn() {
+        outOfTurn = true;
+        endPlayerTurn.Raise();
+    }
+
+    public void StartTurn() {
+        outOfTurn = false;
+    }
+
+    public bool isPlayerLocked() {
+        return outOfTurn;
+    }
+
     private void CheckForMoveCommand()
     {
-        if (movement.isMoving)
+        if (movement.isMoving || outOfTurn)
             return;
 
         if (Input.GetMouseButtonDown(0))
@@ -45,6 +55,7 @@ public class Player : MonoBehaviour
                 {
                     print("Movement is valid, starting coroutine.");
                     StartCoroutine(movement.MoveTo(gridPosition, Mathf.FloorToInt(movement.maxMoveDistance)));
+                    EndTurn();
                 }
             }
         }

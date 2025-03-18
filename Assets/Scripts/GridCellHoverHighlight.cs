@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridCellHoverHighlight : MonoBehaviour
@@ -56,10 +55,10 @@ public class GridCellHoverHighlight : MonoBehaviour
                 {
                     DestroyLastHighlight();
 
-                    if (Utilities.MovementIsValid(playerTransform.position, gridPosition, player.MaxMoveDistance()))
+                    if (!Utilities.MovementIsValid(playerTransform.position, gridPosition, player.MaxMoveDistance()) || player.isPlayerLocked())
                     {
                         lastSpawnedHighlight = Instantiate(
-                            validCellHighlight,
+                            invalidCellHighlight,
                             gridPosition,
                             Quaternion.identity
                         );
@@ -67,7 +66,7 @@ public class GridCellHoverHighlight : MonoBehaviour
                     else
                     {
                         lastSpawnedHighlight = Instantiate(
-                            invalidCellHighlight,
+                            validCellHighlight,
                             gridPosition,
                             Quaternion.identity
                         );
