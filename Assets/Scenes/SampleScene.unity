@@ -12508,6 +12508,7 @@ GameObject:
   - component: {fileID: 1181490809}
   - component: {fileID: 1181490814}
   - component: {fileID: 1181490813}
+  - component: {fileID: 1181490815}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -12632,6 +12633,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9507f83c6a622459eee2026c9589e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endPlayerTurn: {fileID: 11400000, guid: bd9a3e3cc248123489decfd458238750, type: 2}
+--- !u!114 &1181490815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181490807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfe9a2e35cfb045bc9addea21b9276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: f9a05f194f12613489fb8ff1e212711a, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181490814}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: StartTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1184183056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18767,6 +18797,7 @@ GameObject:
   - component: {fileID: 1672202413}
   - component: {fileID: 1672202412}
   - component: {fileID: 1672202411}
+  - component: {fileID: 1672202416}
   m_Layer: 0
   m_Name: Charger
   m_TagString: Untagged
@@ -18817,6 +18848,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb8c0a66eed0e9d43a3d80e094de41fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTransform: {fileID: 1181490812}
+  endEnemyTurn: {fileID: 11400000, guid: f9a05f194f12613489fb8ff1e212711a, type: 2}
 --- !u!136 &1672202413
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -18890,6 +18923,34 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672202409}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1672202416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672202409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfe9a2e35cfb045bc9addea21b9276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: bd9a3e3cc248123489decfd458238750, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1672202412}
+        m_TargetAssemblyTypeName: ChargerEnemy, Assembly-CSharp
+        m_MethodName: EnemyTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1678256875 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a0e4939c752164c448fd5be386a6c463, type: 3}
@@ -24949,6 +25010,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.082125, y: 2, z: 2.082125}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!1 &2126542049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2126542050}
+  m_Layer: 0
+  m_Name: TurnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2126542050
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126542049}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2136844582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25113,6 +25205,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 705507995}
   - {fileID: 1863601835}
+  - {fileID: 2126542050}
   - {fileID: 1181490812}
   - {fileID: 1506437117}
   - {fileID: 469237878}
