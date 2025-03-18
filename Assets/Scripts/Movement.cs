@@ -14,7 +14,7 @@ public class Movement : MonoBehaviour
     [HideInInspector]
     public bool isMoving = false;
 
-    public IEnumerator MoveTo(Vector3 newTargetPosition, int limit = 0)
+    public IEnumerator MoveTo(Vector3 newTargetPosition, int limit)
     {
         isMoving = true;
 

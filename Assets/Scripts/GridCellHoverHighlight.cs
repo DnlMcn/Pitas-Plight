@@ -56,7 +56,7 @@ public class GridCellHoverHighlight : MonoBehaviour
                 {
                     DestroyLastHighlight();
 
-                    if (Utilities.MovementIsValid(transform.position, gridPosition, player.MaxMoveDistance()))
+                    if (Utilities.MovementIsValid(playerTransform.position, gridPosition, player.MaxMoveDistance()))
                     {
                         lastSpawnedHighlight = Instantiate(
                             validCellHighlight,

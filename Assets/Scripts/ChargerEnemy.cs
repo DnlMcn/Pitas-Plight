@@ -6,6 +6,8 @@ public class ChargerEnemy : MonoBehaviour
 {
     float chargeDistance = 4f;
     int maxStepsPerTurn = 1;
+    bool isPreparingAttack;
+    bool isAttacking;
 
     Transform playerTransform;
     Movement movement;
@@ -15,22 +17,39 @@ public class ChargerEnemy : MonoBehaviour
         playerTransform = GameObject.FindWithTag("Player").transform;
     }
 
-    void Update()
+    void EnemyTurn()
     {
-        MoveTowardsPlayer();
-        Attack();
+        if (!isAttacking && !isPreparingAttack && IsPlayerInAttackRange())
+        {
+            PrepareAttack();
+        }
+        else if (!isAttacking && isPreparingAttack && IsPlayerInAttackRange())
+        {
+            Attack();
+        }
+        else if (!isAttacking && !isPreparingAttack && !IsPlayerInAttackRange())
+        {
+            MoveTowardsPlayer();
+        }
+    }
+
+    void PrepareAttack()
+    {
+        // TODO: Draw something that lets the player see attack range and intention
     }
 
     void Attack()
     {
-        // TODO: Draw something that lets me player see attack intentions
+        // TODO: Move enemy according to attack, call event to deal damage
     }
 
     void MoveTowardsPlayer()
     {
-        if (!Utilities.IsInLinearRange(transform.position, playerTransform.position, chargeDistance))
-        {
-            movement.MoveTo(playerTransform.position, maxStepsPerTurn);
-        }
+        StartCoroutine(movement.MoveTo(playerTransform.position, maxStepsPerTurn));
+    }
+
+    bool IsPlayerInAttackRange()
+    {
+        return Utilities.IsInLinearRange(transform.position, playerTransform.position, chargeDistance);
     }
 }

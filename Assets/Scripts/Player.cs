@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     {
         camera = Utilities.GetMainCamera();
         movement = GetComponent<Movement>();
-        // transform.position = startingPosition;
+        transform.position = startingPosition;
     }
 
     private void Update()
@@ -35,17 +35,16 @@ public class Player : MonoBehaviour
             Ray ray = camera.ScreenPointToRay(mousePosition);
             RaycastHit hitInfo;
 
-            Vector3 hitPoint = Vector3.zero;
             int groundLayerMask = LayerMask.GetMask("Ground");
 
             if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, groundLayerMask))
             {
-                hitPoint = hitInfo.point;
-                Vector3 gridPosition = Utilities.AlignToGrid(hitPoint, transform.position.y);
+                Vector3 gridPosition = Utilities.AlignToGrid(hitInfo.point, transform.position.y);
 
                 if (gridPosition != transform.position && Utilities.MovementIsValid(transform.position, gridPosition, movement.maxMoveDistance))
                 {
-                    StartCoroutine(movement.MoveTo(gridPosition));
+                    print("Movement is valid, starting coroutine.");
+                    StartCoroutine(movement.MoveTo(gridPosition, Mathf.FloorToInt(movement.maxMoveDistance)));
                 }
             }
         }
