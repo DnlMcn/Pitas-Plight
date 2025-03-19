@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ChargerEnemy : MonoBehaviour
 {
-    float chargeDistance = 4f;
-    int maxStepsPerTurn = 1;
+    public float chargeDistance = 5f;
+    public float chargeStepDuration = 0.2f;
+    public int maxStepsPerTurn = 1;
     bool isPreparingAttack;
     bool isAttacking;
+    Vector3 attackDirection = Vector3.zero;
 
     public Transform playerTransform;
     Movement movement;
@@ -20,48 +22,117 @@ public class ChargerEnemy : MonoBehaviour
 
     public void EnemyTurn()
     {
-        StartCoroutine(Utilities.Wait(0.5f));
-
-        if (!isAttacking && !isPreparingAttack && IsPlayerInAttackRange())
+        if (!isAttacking && isPreparingAttack)
         {
-            PrepareAttack();
-            print("Enemy preparing attack");
-        }
-        else if (!isAttacking && isPreparingAttack && IsPlayerInAttackRange())
-        {
-            Attack();
+            StartCoroutine(Attack());
             print("Enemy attacking");
+        }
+        else if (!isAttacking && !isPreparingAttack && IsPlayerInAttackRange())
+        {
+            StartCoroutine(PrepareAttack());
+            print("Enemy preparing attack");
         }
         else if (!isAttacking && !isPreparingAttack && !IsPlayerInAttackRange())
         {
             MoveTowardsPlayer();
-            print("Enemy moving towards player");
         }
+    }
 
+    IEnumerator PrepareAttack()
+    {
+        isPreparingAttack = true;
+        yield return null;
         endEnemyTurn.Raise();
     }
 
-    void PrepareAttack()
-    {
-        isPreparingAttack = true;
-        // TODO: Draw something that lets the player see attack range and intention
-    }
-
-    void Attack()
+    IEnumerator Attack()
     {
         isPreparingAttack = false;
         isAttacking = true;
-        // TODO: Move enemy according to attack, call event to deal damage
+        yield return StartCoroutine(movement.ChargeInDirection(attackDirection, Mathf.RoundToInt(chargeDistance), chargeStepDuration, endEnemyTurn));
         isAttacking = false;
     }
 
     void MoveTowardsPlayer()
     {
-        StartCoroutine(movement.MoveTo(playerTransform.position, maxStepsPerTurn));
+        StartCoroutine(movement.MoveTo(playerTransform.position, maxStepsPerTurn, endEnemyTurn));
     }
 
     bool IsPlayerInAttackRange()
     {
-        return Utilities.IsInLinearRange(transform.position, playerTransform.position, chargeDistance);
+        if (Physics.Raycast(transform.position, Vector3.right, out RaycastHit hit, chargeDistance))
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                attackDirection = Vector3.right;
+                Debug.DrawRay(transform.position, Vector3.right * chargeDistance, Color.green, 2);
+                return true;
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, Vector3.right * chargeDistance, Color.yellow, 2);
+            }
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, Vector3.right * chargeDistance, Color.red, 2);
+        }
+
+        if (Physics.Raycast(transform.position, Vector3.left, out hit, chargeDistance))
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                attackDirection = Vector3.left;
+                Debug.DrawRay(transform.position, Vector3.left * chargeDistance, Color.green, 2);
+                return true;
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, Vector3.left * chargeDistance, Color.yellow, 2);
+            }
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, Vector3.left * chargeDistance, Color.red, 2);
+        }
+
+        if (Physics.Raycast(transform.position, Vector3.forward, out hit, chargeDistance))
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                attackDirection = Vector3.forward;
+                Debug.DrawRay(transform.position, Vector3.forward * chargeDistance, Color.green, 2);
+                return true;
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, Vector3.forward * chargeDistance, Color.yellow, 2);
+            }
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, Vector3.forward * chargeDistance, Color.red, 2);
+        }
+
+        if (Physics.Raycast(transform.position, Vector3.back, out hit, chargeDistance))
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                attackDirection = Vector3.back;
+                Debug.DrawRay(transform.position, Vector3.back * chargeDistance, Color.green, 2);
+                return true;
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, Vector3.back * chargeDistance, Color.yellow, 2);
+            }
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, Vector3.back * chargeDistance, Color.red, 2);
+        }
+
+        attackDirection = Vector3.zero;
+        return false;
     }
 }

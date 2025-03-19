@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    Vector3 startingPosition = new(2f, 1.3f, -3f);
+    public Vector3 startingPosition = new(2f, 1.3f, -3f);
 
     private Movement movement;
     private new Camera camera;
@@ -23,11 +23,12 @@ public class Player : MonoBehaviour
 
     public void EndTurn() {
         outOfTurn = true;
-        endPlayerTurn.Raise();
+        print("Ending player turn");
     }
 
     public void StartTurn() {
         outOfTurn = false;
+        print("Starting player turn");
     }
 
     public bool isPlayerLocked() {
@@ -53,9 +54,7 @@ public class Player : MonoBehaviour
 
                 if (gridPosition != transform.position && Utilities.MovementIsValid(transform.position, gridPosition, movement.maxMoveDistance))
                 {
-                    print("Movement is valid, starting coroutine.");
-                    StartCoroutine(movement.MoveTo(gridPosition, Mathf.FloorToInt(movement.maxMoveDistance)));
-                    EndTurn();
+                    StartCoroutine(movement.MoveTo(gridPosition, Mathf.FloorToInt(movement.maxMoveDistance), endPlayerTurn));
                 }
             }
         }
@@ -69,5 +68,13 @@ public class Player : MonoBehaviour
     public float MaxMoveDistance()
     {
         return movement.maxMoveDistance;
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "Enemy")
+        {
+            Destroy(gameObject);
+        }
     }
 }

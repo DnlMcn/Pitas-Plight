@@ -14,7 +14,7 @@ public class Movement : MonoBehaviour
     [HideInInspector]
     public bool isMoving = false;
 
-    public IEnumerator MoveTo(Vector3 newTargetPosition, int limit)
+    public IEnumerator MoveTo(Vector3 newTargetPosition, int limit, GameEvent gameEventOnEnd = null)
     {
         isMoving = true;
 
@@ -52,6 +52,48 @@ public class Movement : MonoBehaviour
         }
 
         isMoving = false;
+
+        if (gameEventOnEnd)
+        {
+            gameEventOnEnd.Raise();
+        }
+
+        if (!IsGrounded())
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public IEnumerator ChargeInDirection(Vector3 direction, int cells, float stepTime, GameEvent gameEventOnEnd)
+    {
+        isMoving = true;
+
+        Vector3 startingPosition = Utilities.AlignToGrid(transform.position, height);
+        yield return StartCoroutine(StepToPosition(startingPosition, startingPosition + (direction.normalized * cells)));
+
+        isMoving = false;
+
+        if (gameEventOnEnd)
+        {
+            gameEventOnEnd.Raise();
+        }
+
+        if (!IsGrounded())
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public bool IsGrounded()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, 1f, LayerMask.GetMask("Ground")))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private IEnumerator StepToPosition(Vector3 startPosition, Vector3 endPosition)

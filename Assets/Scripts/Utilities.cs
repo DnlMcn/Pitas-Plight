@@ -3,8 +3,6 @@ using UnityEngine;
 
 public static class Utilities
 {
-    static float gridHeight = 0; 
-
     /// <summary>
     /// Rounds a Vector3 to the nearest grid-aligned position.
     /// </summary>
