@@ -21,17 +21,20 @@ public class Player : MonoBehaviour
         CheckForMoveCommand();
     }
 
-    public void EndTurn() {
+    public void EndTurn()
+    {
         outOfTurn = true;
         print("Ending player turn");
     }
 
-    public void StartTurn() {
+    public void StartTurn()
+    {
         outOfTurn = false;
         print("Starting player turn");
     }
 
-    public bool isPlayerLocked() {
+    public bool isPlayerLocked()
+    {
         return outOfTurn;
     }
 
@@ -44,17 +47,14 @@ public class Player : MonoBehaviour
         {
             Vector3 mousePosition = Input.mousePosition;
             Ray ray = camera.ScreenPointToRay(mousePosition);
-            RaycastHit hitInfo;
 
-            int groundLayerMask = LayerMask.GetMask("Ground");
-
-            if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, groundLayerMask))
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, LayerMask.GetMask("Ground")))
             {
                 Vector3 gridPosition = Utilities.AlignToGrid(hitInfo.point, transform.position.y);
 
                 if (gridPosition != transform.position && Utilities.MovementIsValid(transform.position, gridPosition, movement.maxMoveDistance))
                 {
-                    StartCoroutine(movement.MoveTo(gridPosition, Mathf.FloorToInt(movement.maxMoveDistance), endPlayerTurn));
+                    StartCoroutine(movement.MoveTo(gridPosition, Mathf.FloorToInt(movement.maxMoveDistance), endPlayerTurn, true));
                 }
             }
         }
@@ -70,11 +70,8 @@ public class Player : MonoBehaviour
         return movement.maxMoveDistance;
     }
 
-    void OnTriggerEnter(Collider collider)
+    void OnCollisionEnter(Collision collision)
     {
-        if (collider.gameObject.tag == "Enemy")
-        {
-            Destroy(gameObject);
-        }
+        print("player colliding");
     }
 }

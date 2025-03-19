@@ -25,11 +25,11 @@ public class GridCellHoverHighlight : MonoBehaviour
 
     void Update()
     {
-        if (player.IsMoving())
+        if (player.IsMoving() || !playerTransform)
         {
             DestroyLastHighlight();
         }
-        else
+        else if (playerTransform)
         {
             Vector3 mousePosition = Input.mousePosition;
             Ray ray = camera.ScreenPointToRay(mousePosition);

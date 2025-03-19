@@ -11,6 +11,11 @@ public class ChargerEnemy : MonoBehaviour
     bool isAttacking;
     Vector3 attackDirection = Vector3.zero;
 
+    public Material enemyMaterial;
+    Color enemyMaterialOriginalColor;
+    public GameObject attackPreview;
+    GameObject currentAttackPreview;
+
     public Transform playerTransform;
     Movement movement;
     public GameEvent endEnemyTurn;
@@ -18,18 +23,21 @@ public class ChargerEnemy : MonoBehaviour
     void Start()
     {
         movement = GetComponent<Movement>();
+        enemyMaterialOriginalColor = enemyMaterial.color;
     }
 
     public void EnemyTurn()
     {
         if (!isAttacking && isPreparingAttack)
         {
+            Destroy(currentAttackPreview);
             StartCoroutine(Attack());
             print("Enemy attacking");
         }
         else if (!isAttacking && !isPreparingAttack && IsPlayerInAttackRange())
         {
             StartCoroutine(PrepareAttack());
+            StartCoroutine(ShowEnemyIntentions());
             print("Enemy preparing attack");
         }
         else if (!isAttacking && !isPreparingAttack && !IsPlayerInAttackRange())
@@ -52,6 +60,38 @@ public class ChargerEnemy : MonoBehaviour
         yield return StartCoroutine(movement.ChargeInDirection(attackDirection, Mathf.RoundToInt(chargeDistance), chargeStepDuration, endEnemyTurn));
         isAttacking = false;
     }
+
+    IEnumerator ShowEnemyIntentions()
+    {
+        Renderer rend = GetComponent<Renderer>();
+        // Create a temporary instance of the material so only this enemy is affected.
+        Material tempMaterial = new(rend.sharedMaterial);
+        rend.material = tempMaterial;
+
+        float timer = 0f;
+        while (isPreparingAttack)
+        {
+            // Flash red
+            timer += Time.deltaTime;
+            tempMaterial.color = Color.Lerp(enemyMaterialOriginalColor, Color.red, Mathf.PingPong(timer * 2f, 1));
+            yield return null;
+
+            // Show attack preview
+            float rotation = 0f;
+            if (attackDirection.Equals(Vector3.right) || attackDirection.Equals(Vector3.left))
+            {
+                rotation = 90f;
+            }
+
+            if (!currentAttackPreview)
+            {
+                currentAttackPreview = Instantiate(attackPreview, transform.position + (attackDirection.normalized * 2), Quaternion.Euler(90, rotation, 0));
+            }
+        }
+
+        tempMaterial.color = enemyMaterialOriginalColor;
+    }
+
 
     void MoveTowardsPlayer()
     {
@@ -134,5 +174,18 @@ public class ChargerEnemy : MonoBehaviour
 
         attackDirection = Vector3.zero;
         return false;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (isAttacking && collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(collision.gameObject);
+        }
+    }
+
+    void OnDisable()
+    {
+        enemyMaterial.color = enemyMaterialOriginalColor;
     }
 }
