@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
         camera = Utilities.GetMainCamera();
         movement = GetComponent<Movement>();
         transform.position = startingPosition;
+        cellsManager.AddToTransforms(transform);
     }
 
     private void Update()
@@ -75,11 +76,6 @@ public class Player : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         print("player colliding");
-    }
-
-    void OnEnable()
-    {
-        cellsManager.AddToTransforms(transform);
     }
 
     void OnDestroy()

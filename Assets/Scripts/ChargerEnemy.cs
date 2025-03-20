@@ -26,6 +26,7 @@ public class ChargerEnemy : MonoBehaviour
     {
         movement = GetComponent<Movement>();
         enemyMaterialOriginalColor = enemyMaterial.color;
+        cellsManager.AddToTransforms(transform);
     }
 
     public void EnemyTurn()
@@ -184,11 +185,6 @@ public class ChargerEnemy : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
-    }
-
-    void OnEnable()
-    {
-        cellsManager.AddToTransforms(transform);
     }
 
     void OnDestroy()

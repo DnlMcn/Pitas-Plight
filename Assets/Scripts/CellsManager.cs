@@ -6,6 +6,11 @@ public class CellsManager : MonoBehaviour
 {
     List<Transform> transforms;
 
+    void OnEnable()
+    {
+        transforms = new();
+    }
+
     public bool IsCellOccupied(Vector3 position)
     {
         foreach (Transform t in transforms)
