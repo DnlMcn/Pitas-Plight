@@ -14,6 +14,8 @@ public class Movement : MonoBehaviour
     [HideInInspector]
     public bool isMoving = false;
 
+    public CellsManager cellsManager;
+
     public IEnumerator MoveTo(Vector3 newTargetPosition, int limit, GameEvent gameEventOnEnd = null, bool allowAirstep = false)
     {
         isMoving = true;
@@ -31,7 +33,7 @@ public class Movement : MonoBehaviour
                 startingPosition.z
             );
 
-            if (IsGrounded(nextStep) || allowAirstep)
+            if (IsGrounded(nextStep) || allowAirstep && !cellsManager.IsCellOccupied(nextStep))
             {
                 yield return StartCoroutine(StepToPosition(startingPosition, nextStep));
                 startingPosition = nextStep;
@@ -52,7 +54,7 @@ public class Movement : MonoBehaviour
                 Mathf.MoveTowards(startingPosition.z, targetPosition.z, 1)
             );
 
-            if (IsGrounded(nextStep) || allowAirstep)
+            if (IsGrounded(nextStep) || allowAirstep && !cellsManager.IsCellOccupied(nextStep))
             {
                 yield return StartCoroutine(StepToPosition(startingPosition, nextStep));
                 startingPosition = nextStep;

@@ -20,6 +20,8 @@ public class ChargerEnemy : MonoBehaviour
     Movement movement;
     public GameEvent endEnemyTurn;
 
+    public CellsManager cellsManager;
+
     void Start()
     {
         movement = GetComponent<Movement>();
@@ -184,8 +186,18 @@ public class ChargerEnemy : MonoBehaviour
         }
     }
 
-    void OnDisable()
+    void OnEnable()
+    {
+        cellsManager.AddToTransforms(transform);
+    }
+
+    void OnDestroy()
     {
         enemyMaterial.color = enemyMaterialOriginalColor;
+        cellsManager.RemoveFromTransforms(transform);
+        if (currentAttackPreview)
+        {
+            Destroy(currentAttackPreview);
+        }
     }
 }

@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     private bool outOfTurn = false;
     public GameEvent endPlayerTurn;
 
+    public CellsManager cellsManager;
+
     private void Start()
     {
         camera = Utilities.GetMainCamera();
@@ -73,5 +75,15 @@ public class Player : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         print("player colliding");
+    }
+
+    void OnEnable()
+    {
+        cellsManager.AddToTransforms(transform);
+    }
+
+    void OnDestroy()
+    {
+        cellsManager.RemoveFromTransforms(transform);
     }
 }
