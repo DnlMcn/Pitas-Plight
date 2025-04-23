@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,15 +9,19 @@ public class Player : MonoBehaviour
     private new Camera camera;
     private bool outOfTurn = false;
     public GameEvent endPlayerTurn;
+    public int playerId;
 
     public CellsManager cellsManager;
 
     private void Start()
     {
-        camera = Utilities.GetMainCamera();
-        movement = GetComponent<Movement>();
-        transform.position = startingPosition;
-        cellsManager.AddToTransforms(transform);
+        if (playerId == 1)
+        {
+            camera = Utilities.GetMainCamera();
+            movement = GetComponent<Movement>();
+            transform.position = startingPosition;
+            cellsManager.AddToTransforms(transform);
+        }
     }
 
     private void Update()
@@ -27,13 +32,13 @@ public class Player : MonoBehaviour
     public void EndTurn()
     {
         outOfTurn = true;
-        print("Ending player turn");
+        print("Ending player " + playerId + "'s turn");
     }
 
     public void StartTurn()
     {
         outOfTurn = false;
-        print("Starting player turn");
+        print("Starting player " + playerId + "'s turn");
     }
 
     public bool isPlayerLocked()

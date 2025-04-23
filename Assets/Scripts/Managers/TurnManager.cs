@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    public GameEvent endPlayerTurn;
+    public GameEvent endPlayer1Turn;
+    public GameEvent endPlayer2Turn;
     public GameEvent endEnemyTurn;
 
-    
+    public bool coopMode;
 }

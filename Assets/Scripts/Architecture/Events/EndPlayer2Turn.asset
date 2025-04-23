@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfe65c84a4a6ebb4d87d23f4a586b142, type: 3}
-  m_Name: EndPlayerTurn
+  m_Name: EndPlayer2Turn
   m_EditorClassIdentifier: 
