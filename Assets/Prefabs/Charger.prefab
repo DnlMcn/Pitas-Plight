@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 703898598899175616}
   - component: {fileID: 7357088345927348695}
   - component: {fileID: 3405052551679650233}
-  - component: {fileID: 7193206497241994838}
   - component: {fileID: 1632851966733502395}
   m_Layer: 0
   m_Name: Charger
@@ -148,34 +147,6 @@ MonoBehaviour:
   stepTime: 0.2
   isMoving: 0
   cellsManager: {fileID: 0}
---- !u!114 &7193206497241994838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7201450504090094097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9bfe9a2e35cfb045bc9addea21b9276, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 8bc62923882a78d49b6c71b6442087cc, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7357088345927348695}
-        m_TargetAssemblyTypeName: ChargerEnemy, Assembly-CSharp
-        m_MethodName: EnemyTurn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!54 &1632851966733502395
 Rigidbody:
   m_ObjectHideFlags: 0

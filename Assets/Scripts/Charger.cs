@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChargerEnemy : MonoBehaviour
+public class Charger : Enemy
 {
     public float chargeDistance = 5f;
     public float chargeStepDuration = 0.2f;
@@ -18,7 +18,7 @@ public class ChargerEnemy : MonoBehaviour
 
     public Transform playerTransform;
     Movement movement;
-    public GameEvent endEnemyTurn;
+
 
     public CellsManager cellsManager;
 

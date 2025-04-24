@@ -15,13 +15,10 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        if (playerId == 1)
-        {
-            camera = Utilities.GetMainCamera();
-            movement = GetComponent<Movement>();
-            transform.position = startingPosition;
-            cellsManager.AddToTransforms(transform);
-        }
+        camera = Utilities.GetMainCamera();
+        movement = GetComponent<Movement>();
+        transform.position = startingPosition;
+        cellsManager.AddToTransforms(transform);
     }
 
     private void Update()
