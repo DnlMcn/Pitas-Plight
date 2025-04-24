@@ -23642,6 +23642,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2126542050}
+  - component: {fileID: 2126542052}
   - component: {fileID: 2126542051}
   m_Layer: 0
   m_Name: TurnManager
@@ -23674,11 +23675,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 2126542049}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b22d77617ae5a4baf6a5210da74bec, type: 3}
+  m_Script: {fileID: 11500000, guid: a9bfe9a2e35cfb045bc9addea21b9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1TurnEnd: {fileID: 11400000, guid: bd9a3e3cc248123489decfd458238750, type: 2}
-  player2TurnEnd: {fileID: 11400000, guid: 8bc62923882a78d49b6c71b6442087cc, type: 2}
+  Event: {fileID: 11400000, guid: 3bbcc4ceff91ba9469ec1ccb25cd90cb, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2126542052}
+        m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
+        m_MethodName: NextTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2126542052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126542049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16c6b3924edafbf4f8750e175086121a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2136844582
 PrefabInstance:
   m_ObjectHideFlags: 0

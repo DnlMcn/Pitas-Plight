@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Player : MonoBehaviour
     private Movement movement;
     private new Camera camera;
     private bool outOfTurn = false;
-    public GameEvent endPlayerTurn;
+    public UnityEvent endPlayerTurn;
     public int playerId;
 
     public CellsManager cellsManager;
@@ -64,6 +65,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+
 
     public bool IsMoving()
     {

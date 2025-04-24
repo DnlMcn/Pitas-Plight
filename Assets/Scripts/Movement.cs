@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Movement : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Movement : MonoBehaviour
 
     public CellsManager cellsManager;
 
-    public IEnumerator MoveTo(Vector3 newTargetPosition, int limit, GameEvent gameEventOnEnd = null, bool allowAirstep = false)
+    public IEnumerator MoveTo(Vector3 newTargetPosition, int limit, UnityEvent gameEventOnEnd = null, bool allowAirstep = false)
     {
         isMoving = true;
 
@@ -69,9 +70,9 @@ public class Movement : MonoBehaviour
 
         isMoving = false;
 
-        if (gameEventOnEnd)
+        if (gameEventOnEnd != null)
         {
-            gameEventOnEnd.Raise();
+            gameEventOnEnd.Invoke();
         }
 
         if (!IsGrounded())
@@ -80,7 +81,7 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public IEnumerator ChargeInDirection(Vector3 direction, int cells, float stepTime, GameEvent gameEventOnEnd)
+    public IEnumerator ChargeInDirection(Vector3 direction, int cells, float stepTime, UnityEvent gameEventOnEnd)
     {
         isMoving = true;
 
@@ -89,9 +90,9 @@ public class Movement : MonoBehaviour
 
         isMoving = false;
 
-        if (gameEventOnEnd)
+        if (gameEventOnEnd != null)
         {
-            gameEventOnEnd.Raise();
+            gameEventOnEnd.Invoke();
         }
     }
 

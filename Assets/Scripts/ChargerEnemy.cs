@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class Charger : Enemy
+public class ChargerEnemy : MonoBehaviour
 {
     public float chargeDistance = 5f;
     public float chargeStepDuration = 0.2f;
@@ -19,8 +20,9 @@ public class Charger : Enemy
     public Transform playerTransform;
     Movement movement;
 
-
     public CellsManager cellsManager;
+
+    public UnityEvent endEnemyTurn;
 
     void Start()
     {
@@ -53,7 +55,7 @@ public class Charger : Enemy
     {
         isPreparingAttack = true;
         yield return null;
-        endEnemyTurn.Raise();
+        endEnemyTurn.Invoke();
     }
 
     IEnumerator Attack()

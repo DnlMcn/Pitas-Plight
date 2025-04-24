@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 525672317414474016}
   - component: {fileID: 8414868460600927363}
   - component: {fileID: 3049043167926928112}
-  - component: {fileID: 1828561722868826401}
+  - component: {fileID: 7772435261187901805}
   - component: {fileID: 5477768774062022815}
   m_Layer: 0
   m_Name: Player
@@ -124,7 +124,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingPosition: {x: 2, y: 1.3, z: -3}
-  endPlayerTurn: {fileID: 11400000, guid: bd9a3e3cc248123489decfd458238750, type: 2}
+  endPlayerTurn:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7772435261187901805}
+        m_TargetAssemblyTypeName: TurnTaker, Assembly-CSharp
+        m_MethodName: EndTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  playerId: 0
+  cellsManager: {fileID: 0}
 --- !u!114 &3049043167926928112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,7 +157,8 @@ MonoBehaviour:
   height: 1.3
   stepTime: 0.2
   isMoving: 0
---- !u!114 &1828561722868826401
+  cellsManager: {fileID: 0}
+--- !u!114 &7772435261187901805
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,11 +167,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3478092633366818958}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9bfe9a2e35cfb045bc9addea21b9276, type: 3}
+  m_Script: {fileID: 11500000, guid: b08225ec9592bd142889cc802ce3aa21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: f9a05f194f12613489fb8ff1e212711a, type: 2}
-  Response:
+  startTurnResponse:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8414868460600927363}
@@ -169,6 +185,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  endTurn: {fileID: 11400000, guid: 3bbcc4ceff91ba9469ec1ccb25cd90cb, type: 2}
+  initiative: 0
 --- !u!54 &5477768774062022815
 Rigidbody:
   m_ObjectHideFlags: 0
