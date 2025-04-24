@@ -1227,6 +1227,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player2
       objectReference: {fileID: 0}
+    - target: {fileID: 7772435261187901805, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
+      propertyPath: initiative
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8414868460600927363, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
       propertyPath: playerId
       value: 2
@@ -1244,60 +1248,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 862484097981527134, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1430374303}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3478092633366818958, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
-      insertIndex: 7
-      addedObject: {fileID: 121045277}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
 --- !u!4 &121045274 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 862484097981527134, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
   m_PrefabInstance: {fileID: 121045273}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &121045275 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3478092633366818958, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
-  m_PrefabInstance: {fileID: 121045273}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &121045276 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8414868460600927363, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
-  m_PrefabInstance: {fileID: 121045273}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 121045275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd9507f83c6a622459eee2026c9589e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &121045277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 121045275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9bfe9a2e35cfb045bc9addea21b9276, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 310908137db28b143babebfe15239898, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 121045276}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: StartTurn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &123727249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18811,6 +18768,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1506437117}
     m_Modifications:
+    - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
+      propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndTurn
+      objectReference: {fileID: 0}
+    - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
+      propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TurnTaker, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3048405063061386356, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -18851,6 +18816,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3405052551679650233, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
+      propertyPath: cellsManager
+      value: 
+      objectReference: {fileID: 543627542}
     - target: {fileID: 7201450504090094097, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: m_Name
       value: Charger (1)
@@ -22839,6 +22808,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1506437117}
     m_Modifications:
+    - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
+      propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndTurn
+      objectReference: {fileID: 0}
+    - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
+      propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TurnTaker, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3048405063061386356, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2
@@ -22879,6 +22856,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3405052551679650233, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
+      propertyPath: cellsManager
+      value: 
+      objectReference: {fileID: 543627542}
     - target: {fileID: 7201450504090094097, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: m_Name
       value: Charger (2)
@@ -23706,6 +23687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c6b3924edafbf4f8750e175086121a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turns: []
 --- !u!1001 &2136844582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23936,6 +23918,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player1
       objectReference: {fileID: 0}
+    - target: {fileID: 7772435261187901805, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
+      propertyPath: initiative
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8414868460600927363, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
       propertyPath: playerId
       value: 1
@@ -23953,55 +23939,8 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 862484097981527134, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 478494266}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3478092633366818958, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
-      insertIndex: 7
-      addedObject: {fileID: 2852445204965039819}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
---- !u!1 &2852445204965039817 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3478092633366818958, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
-  m_PrefabInstance: {fileID: 2852445204965039816}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2852445204965039818 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8414868460600927363, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
-  m_PrefabInstance: {fileID: 2852445204965039816}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2852445204965039817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd9507f83c6a622459eee2026c9589e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2852445204965039819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2852445204965039817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9bfe9a2e35cfb045bc9addea21b9276, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 9db4c98e795088a4da7d115473027607, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2852445204965039818}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: StartTurn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &7096120061319017473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24010,6 +23949,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1506437117}
     m_Modifications:
+    - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
+      propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndTurn
+      objectReference: {fileID: 0}
+    - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
+      propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TurnTaker, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3048405063061386356, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3
@@ -24050,6 +23997,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3405052551679650233, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
+      propertyPath: cellsManager
+      value: 
+      objectReference: {fileID: 543627542}
     - target: {fileID: 7201450504090094097, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: m_Name
       value: Charger
