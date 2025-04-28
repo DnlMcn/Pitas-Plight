@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class GridCellHoverHighlight : MonoBehaviour
 {
+    public GameObject playerOne;
+
     public float highlightHeight = 5.6f;
-    public Transform playerTransform;
-    private Player player;
+    public Transform activePlayerTransform;
+    private Player activePlayer;
     private new Camera camera;
 
     public GameObject validCellHighlight;
@@ -15,21 +17,39 @@ public class GridCellHoverHighlight : MonoBehaviour
     private Vector3 lastGridPosition;
     private GameObject lastSpawnedHighlight;
 
+    EventBinding<UpdateActivePlayer> updateActivePlayerBinding;
+
+    void OnEnable()
+    {
+        updateActivePlayerBinding = new EventBinding<UpdateActivePlayer>(UpdateActivePlayer);
+        EventBus<UpdateActivePlayer>.Register(updateActivePlayerBinding);
+    }
+
+    void OnDisable()
+    {
+        EventBus<UpdateActivePlayer>.Deregister(updateActivePlayerBinding);
+    }
+
     void Start()
     {
-        GameObject playerObject = GameObject.FindWithTag("Player");
-        playerTransform = playerObject.transform;
-        player = playerObject.GetComponent<Player>();
+        activePlayerTransform = playerOne.transform;
+        activePlayer = playerOne.GetComponent<Player>();
         camera = Utilities.GetMainCamera();
+    }
+
+    void UpdateActivePlayer(UpdateActivePlayer evt)
+    {
+        activePlayerTransform = evt.gameObject.transform;
+        activePlayer = evt.gameObject.GetComponent<Player>();
     }
 
     void Update()
     {
-        if (player.IsMoving() || !playerTransform)
+        if (activePlayer.IsMoving() || !activePlayerTransform)
         {
             DestroyLastHighlight();
         }
-        else if (playerTransform)
+        else if (activePlayerTransform)
         {
             Vector3 mousePosition = Input.mousePosition;
             Ray ray = camera.ScreenPointToRay(mousePosition);
@@ -45,8 +65,8 @@ public class GridCellHoverHighlight : MonoBehaviour
 
                 /// Don't show highlight on the cell the player is on
                 if (
-                    gridPosition.x == playerTransform.position.x
-                    && gridPosition.z == playerTransform.position.z
+                    gridPosition.x == activePlayerTransform.position.x
+                    && gridPosition.z == activePlayerTransform.position.z
                 )
                 {
                     DestroyLastHighlight();
@@ -55,7 +75,7 @@ public class GridCellHoverHighlight : MonoBehaviour
                 {
                     DestroyLastHighlight();
 
-                    if (!Utilities.MovementIsValid(playerTransform.position, gridPosition, player.MaxMoveDistance()) || player.isPlayerLocked())
+                    if (!Utilities.MovementIsValid(activePlayerTransform.position, gridPosition, activePlayer.MaxMoveDistance()) || activePlayer.isPlayerLocked())
                     {
                         lastSpawnedHighlight = Instantiate(
                             invalidCellHighlight,

@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    public Vector3 startingPosition = new(2f, 1.3f, -3f);
+    public Vector3 startingPosition;
 
     private Movement movement;
     private new Camera camera;
@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 
                 if (gridPosition != transform.position && Utilities.MovementIsValid(transform.position, gridPosition, movement.maxMoveDistance))
                 {
-                    StartCoroutine(movement.MoveTo(gridPosition, Mathf.FloorToInt(movement.maxMoveDistance), endPlayerTurn, true));
+                    StartCoroutine(movement.MoveTo(gridPosition, Mathf.FloorToInt(movement.maxMoveDistance), allowAirstep: true));
                 }
             }
         }
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
         print("player colliding");
     }
 
-    void OnDestroy()
+    void OnDisable()
     {
         cellsManager.RemoveFromTransforms(transform);
     }

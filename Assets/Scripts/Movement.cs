@@ -17,7 +17,7 @@ public class Movement : MonoBehaviour
 
     public CellsManager cellsManager;
 
-    public IEnumerator MoveTo(Vector3 newTargetPosition, int limit, UnityEvent gameEventOnEnd = null, bool allowAirstep = false)
+    public IEnumerator MoveTo(Vector3 newTargetPosition, int limit, bool allowAirstep = false, bool endsTurn = true)
     {
         isMoving = true;
 
@@ -70,9 +70,9 @@ public class Movement : MonoBehaviour
 
         isMoving = false;
 
-        if (gameEventOnEnd != null)
+        if (endsTurn)
         {
-            gameEventOnEnd.Invoke();
+            EventBus<EndTurn>.Raise(new());
         }
 
         if (!IsGrounded())
@@ -81,7 +81,7 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public IEnumerator ChargeInDirection(Vector3 direction, int cells, float stepTime, UnityEvent gameEventOnEnd)
+    public IEnumerator ChargeInDirection(Vector3 direction, int cells, float stepTime, bool endsTurn = true)
     {
         isMoving = true;
 
@@ -90,9 +90,9 @@ public class Movement : MonoBehaviour
 
         isMoving = false;
 
-        if (gameEventOnEnd != null)
+        if (endsTurn)
         {
-            gameEventOnEnd.Invoke();
+            EventBus<EndTurn>.Raise(new());
         }
     }
 

@@ -24,6 +24,44 @@ public class CellsManager : MonoBehaviour
         return false;
     }
 
+    public List<Transform> GetPlayerTransforms()
+    {
+        List<Transform> players = new();
+        foreach (Transform transform in transforms)
+        {
+            if (transform.gameObject.CompareTag("Player"))
+            {
+                players.Add(transform);
+            }
+        }
+        return players;
+    }
+
+    public Transform GetClosestPlayer(Vector3 position)
+    {
+        List<Transform> players = GetPlayerTransforms();
+
+        if (players == null) {
+            return null;
+        }
+
+        Transform closestTransform = players[0].transform;
+        float closestDistance = Vector3.Distance(position, closestTransform.position);
+
+        for (int i = 1; i < players.Count - 1; i++) {
+            Transform newTransform = players[i].transform;
+            float newDistance = Vector3.Distance(position, newTransform.position);
+
+            if (newDistance < closestDistance)
+            {
+                closestTransform = newTransform;
+                closestDistance = newDistance;
+            }
+        }
+
+        return closestTransform;
+    }
+
     public void AddToTransforms(Transform transform)
     {
         transforms.Add(transform);

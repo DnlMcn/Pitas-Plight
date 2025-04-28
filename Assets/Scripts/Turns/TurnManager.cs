@@ -4,21 +4,34 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    public static TurnManager instance { get; private set; }
+    public static TurnManager Instance { get; private set; }
 
     public List<TurnTaker> turns;
     private int currentTurn = 0;
 
-    private void Awake()
+    EventBinding<EndTurn> endTurnEventBinding;
+
+    void Awake()
     {
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(this);
         }
         else
         {
-            instance = this;
+            Instance = this;
         }
+    }
+
+    void OnEnable()
+    {
+        endTurnEventBinding = new EventBinding<EndTurn>(EndTurn);
+        EventBus<EndTurn>.Register(endTurnEventBinding);
+    }
+
+    void OnDisable()
+    {
+        EventBus<EndTurn>.Deregister(endTurnEventBinding);
     }
 
     void Start()
@@ -27,18 +40,30 @@ public class TurnManager : MonoBehaviour
         {
             print("There are no turns set up!");
         }
-
-        turns.Sort((a, b) => b.initiative.CompareTo(a.initiative));
-        turns[0].StartTurn();
+        else
+        {
+            turns.Sort((a, b) => b.initiative.CompareTo(a.initiative));
+            turns[0].StartTurn();
+        }
     }
 
-    public void NextTurn()
+    void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            EventBus<EndTurn>.Raise(new());
+        }
+    }
+
+    public void EndTurn(EndTurn endTurnEvent)
+    {
+        print("End Turn Event Received!");
+
         currentTurn += 1;
 
-        print("Current turn: " + currentTurn);
+        print("Current turn: " + currentTurn + 1);
 
-        if (currentTurn > turns.Count)
+        if (currentTurn > turns.Count - 1)
         {
             currentTurn = 0;
         }
@@ -46,13 +71,13 @@ public class TurnManager : MonoBehaviour
         turns[currentTurn].StartTurn();
     }
 
-    public void AddToList(TurnTaker turnTaker)
-    {
-        turns.Add(turnTaker);
-    }
+    // public void AddToList(TurnTaker turnTaker)
+    // {
+    //     turns.Add(turnTaker);
+    // }
 
-    public void RemoveFromList(TurnTaker turnTaker)
-    {
-        turns.Remove(turnTaker);
-    }
+    // public void RemoveFromList(TurnTaker turnTaker)
+    // {
+    //     turns.Remove(turnTaker);
+    // }
 }

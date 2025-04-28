@@ -11,6 +11,7 @@ public class ChargerEnemy : MonoBehaviour
     bool isPreparingAttack;
     bool isAttacking;
     Vector3 attackDirection = Vector3.zero;
+    TurnTaker turnTaker;
 
     public Material enemyMaterial;
     Color enemyMaterialOriginalColor;
@@ -22,17 +23,18 @@ public class ChargerEnemy : MonoBehaviour
 
     public CellsManager cellsManager;
 
-    public UnityEvent endEnemyTurn;
-
     void Start()
     {
         movement = GetComponent<Movement>();
+        turnTaker = GetComponent<TurnTaker>();
         enemyMaterialOriginalColor = enemyMaterial.color;
         cellsManager.AddToTransforms(transform);
     }
 
     public void EnemyTurn()
     {
+        UpdateTargetPlayer();
+
         if (!isAttacking && isPreparingAttack)
         {
             Destroy(currentAttackPreview);
@@ -55,15 +57,20 @@ public class ChargerEnemy : MonoBehaviour
     {
         isPreparingAttack = true;
         yield return null;
-        endEnemyTurn.Invoke();
+        EventBus<EndTurn>.Raise(new());
     }
 
     IEnumerator Attack()
     {
         isPreparingAttack = false;
         isAttacking = true;
-        yield return StartCoroutine(movement.ChargeInDirection(attackDirection, Mathf.RoundToInt(chargeDistance), chargeStepDuration, endEnemyTurn));
+        yield return StartCoroutine(movement.ChargeInDirection(attackDirection, Mathf.RoundToInt(chargeDistance), chargeStepDuration));
         isAttacking = false;
+    }
+
+    void UpdateTargetPlayer()
+    {
+        playerTransform = cellsManager.GetClosestPlayer(transform.position);
     }
 
     IEnumerator ShowEnemyIntentions()
@@ -100,7 +107,7 @@ public class ChargerEnemy : MonoBehaviour
 
     void MoveTowardsPlayer()
     {
-        StartCoroutine(movement.MoveTo(playerTransform.position, maxStepsPerTurn, endEnemyTurn));
+        StartCoroutine(movement.MoveTo(playerTransform.position, maxStepsPerTurn));
     }
 
     bool IsPlayerInAttackRange()

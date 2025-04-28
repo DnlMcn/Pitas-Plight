@@ -1,18 +1,18 @@
-using UnityEngine;
-using UnityEditor;
+// using UnityEngine;
+// using UnityEditor;
 
-[CustomEditor(typeof(GameEvent))]
-public class GameEventEditorConfig : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
+// [CustomEditor(typeof(GameEvent))]
+// public class GameEventEditorConfig : Editor
+// {
+//     public override void OnInspectorGUI()
+//     {
+//         DrawDefaultInspector();
 
-        GameEvent myGameEvent = (GameEvent)target;
+//         GameEvent myGameEvent = (GameEvent)target;
 
-        if (GUILayout.Button("Raise()"))
-        {
-            myGameEvent.Raise();
-        }
-    }
-}
+//         if (GUILayout.Button("Raise()"))
+//         {
+//             myGameEvent.Raise();
+//         }
+//     }
+// }
