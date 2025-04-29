@@ -130,21 +130,6 @@ MonoBehaviour:
   attackPreview: {fileID: 2802941832066789695, guid: 61b02f96ef4d87545990127e87d29aec, type: 3}
   playerTransform: {fileID: 0}
   cellsManager: {fileID: 0}
-  endEnemyTurn:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2280152763562399011}
-        m_TargetAssemblyTypeName: TurnTaker, Assembly-CSharp
-        m_MethodName: EndTurn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &3405052551679650233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +162,7 @@ MonoBehaviour:
   startTurnResponse:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2280152763562399011}
+      - m_Target: {fileID: 7357088345927348695}
         m_TargetAssemblyTypeName: ChargerEnemy, Assembly-CSharp
         m_MethodName: EnemyTurn
         m_Mode: 1
@@ -189,7 +174,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  endTurn: {fileID: 11400000, guid: 3bbcc4ceff91ba9469ec1ccb25cd90cb, type: 2}
   initiative: 2
 --- !u!54 &1632851966733502395
 Rigidbody:

@@ -34,6 +34,7 @@ public class ChargerEnemy : MonoBehaviour
     public void EnemyTurn()
     {
         UpdateTargetPlayer();
+        Utilities.Wait(2);
 
         if (!isAttacking && isPreparingAttack)
         {
@@ -103,7 +104,6 @@ public class ChargerEnemy : MonoBehaviour
 
         tempMaterial.color = enemyMaterialOriginalColor;
     }
-
 
     void MoveTowardsPlayer()
     {

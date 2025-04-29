@@ -10,6 +10,7 @@ public class GridCellHoverHighlight : MonoBehaviour
     public Transform activePlayerTransform;
     private Player activePlayer;
     private new Camera camera;
+    public CellsManager cellsManager;
 
     public GameObject validCellHighlight;
     public GameObject invalidCellHighlight;
@@ -75,7 +76,7 @@ public class GridCellHoverHighlight : MonoBehaviour
                 {
                     DestroyLastHighlight();
 
-                    if (!Utilities.MovementIsValid(activePlayerTransform.position, gridPosition, activePlayer.MaxMoveDistance()) || activePlayer.isPlayerLocked())
+                    if (!cellsManager.MovementIsValid(activePlayerTransform.position, gridPosition, activePlayer.MaxMoveDistance()) || activePlayer.IsPlayerLocked())
                     {
                         lastSpawnedHighlight = Instantiate(
                             invalidCellHighlight,

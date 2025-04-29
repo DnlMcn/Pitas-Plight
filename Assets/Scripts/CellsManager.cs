@@ -24,6 +24,11 @@ public class CellsManager : MonoBehaviour
         return false;
     }
 
+    public bool MovementIsValid(Vector3 initialPosition, Vector3 targetPosition, float maxMoveDistance)
+    {
+        return Utilities.MovementIsInRange(initialPosition, targetPosition, maxMoveDistance) && !IsCellOccupied(targetPosition);
+    }
+
     public List<Transform> GetPlayerTransforms()
     {
         List<Transform> players = new();

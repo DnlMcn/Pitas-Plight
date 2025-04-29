@@ -14,6 +14,21 @@ public class Player : MonoBehaviour
 
     public CellsManager cellsManager;
 
+    EventBinding<EndTurn> endTurnBinding;
+
+    void OnEnable()
+    {
+        endTurnBinding = new EventBinding<EndTurn>(EndTurn);
+        EventBus<EndTurn>.Register(endTurnBinding);
+    }
+
+    void OnDisable()
+    {
+        EventBus<EndTurn>.Deregister(endTurnBinding);
+
+        cellsManager.RemoveFromTransforms(transform);
+    }
+
     private void Start()
     {
         camera = Utilities.GetMainCamera();
@@ -27,19 +42,22 @@ public class Player : MonoBehaviour
         CheckForMoveCommand();
     }
 
-    public void EndTurn()
-    {
-        outOfTurn = true;
-        print("Ending player " + playerId + "'s turn");
-    }
-
     public void StartTurn()
     {
         outOfTurn = false;
         print("Starting player " + playerId + "'s turn");
     }
 
-    public bool isPlayerLocked()
+    public void EndTurn(EndTurn evt)
+    {
+        if (!outOfTurn)
+        {
+            outOfTurn = true;
+            print("Ending player " + playerId + "'s turn");
+        }
+    }
+
+    public bool IsPlayerLocked()
     {
         return outOfTurn;
     }
@@ -58,14 +76,13 @@ public class Player : MonoBehaviour
             {
                 Vector3 gridPosition = Utilities.AlignToGrid(hitInfo.point, transform.position.y);
 
-                if (gridPosition != transform.position && Utilities.MovementIsValid(transform.position, gridPosition, movement.maxMoveDistance))
+                if (gridPosition != transform.position && cellsManager.MovementIsValid(transform.position, gridPosition, movement.maxMoveDistance))
                 {
                     StartCoroutine(movement.MoveTo(gridPosition, Mathf.FloorToInt(movement.maxMoveDistance), allowAirstep: true));
                 }
             }
         }
     }
-
 
     public bool IsMoving()
     {
@@ -80,10 +97,5 @@ public class Player : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         print("player colliding");
-    }
-
-    void OnDisable()
-    {
-        cellsManager.RemoveFromTransforms(transform);
     }
 }

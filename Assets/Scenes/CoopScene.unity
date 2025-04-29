@@ -8801,7 +8801,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -66.1}
+  m_LocalPosition: {x: 0, y: 0, z: -50.16}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9809,6 +9809,7 @@ Transform:
   - {fileID: 370201036}
   - {fileID: 2126542050}
   - {fileID: 543627543}
+  - {fileID: 1863601835}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1041097282 stripped
@@ -15560,7 +15561,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 469237878}
-  - {fileID: 1863601835}
   - {fileID: 705507995}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18796,11 +18796,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EndTurn
+      value: EnemyTurn
       objectReference: {fileID: 0}
     - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TurnTaker, Assembly-CSharp
+      value: ChargerEnemy, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3048405063061386356, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20516,7 +20516,7 @@ GameObject:
   - component: {fileID: 1863601835}
   - component: {fileID: 1863601836}
   m_Layer: 0
-  m_Name: Grid Cell Highlighter
+  m_Name: Cell Highlight Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20535,7 +20535,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1444590489}
+  m_Father: {fileID: 1039354333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1863601836
 MonoBehaviour:
@@ -20552,6 +20552,7 @@ MonoBehaviour:
   playerOne: {fileID: 1758923422}
   highlightHeight: 5.6
   activePlayerTransform: {fileID: 0}
+  cellsManager: {fileID: 543627542}
   validCellHighlight: {fileID: 740160877013162047, guid: 5bfcde6614b822a4f9a3a95d56629441, type: 3}
   invalidCellHighlight: {fileID: 5084327978687619765, guid: de3afad4dfa70df40b128a6566013e89, type: 3}
 --- !u!1001 &1868889316
@@ -22864,11 +22865,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EndTurn
+      value: EnemyTurn
       objectReference: {fileID: 0}
     - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TurnTaker, Assembly-CSharp
+      value: ChargerEnemy, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3048405063061386356, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23901,7 +23902,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 862484097981527134, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 862484097981527134, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -23971,6 +23972,10 @@ PrefabInstance:
       propertyPath: cellsManager
       value: 
       objectReference: {fileID: 543627542}
+    - target: {fileID: 8414868460600927363, guid: 6e60a48fb821b31489446e70620c314f, type: 3}
+      propertyPath: startingPosition.x
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -23992,11 +23997,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EndTurn
+      value: EnemyTurn
       objectReference: {fileID: 0}
     - target: {fileID: 2280152763562399011, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: startTurnResponse.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TurnTaker, Assembly-CSharp
+      value: ChargerEnemy, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3048405063061386356, guid: ec597102d1265f34993d94b7d47e800a, type: 3}
       propertyPath: m_LocalPosition.x

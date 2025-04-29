@@ -42,7 +42,7 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            turns.Sort((a, b) => b.initiative.CompareTo(a.initiative));
+            // turns.Sort((a, b) => b.initiative.CompareTo(a.initiative));
             turns[0].StartTurn();
         }
     }
@@ -60,15 +60,12 @@ public class TurnManager : MonoBehaviour
         print("End Turn Event Received!");
 
         currentTurn += 1;
+        int turnsIndex = currentTurn % turns.Count;
 
-        print("Current turn: " + currentTurn + 1);
+        print("Current turn: " + currentTurn);
+        print("Turn index: " + turnsIndex);
 
-        if (currentTurn > turns.Count - 1)
-        {
-            currentTurn = 0;
-        }
-
-        turns[currentTurn].StartTurn();
+        turns[turnsIndex].StartTurn();
     }
 
     // public void AddToList(TurnTaker turnTaker)
@@ -76,8 +73,16 @@ public class TurnManager : MonoBehaviour
     //     turns.Add(turnTaker);
     // }
 
-    // public void RemoveFromList(TurnTaker turnTaker)
-    // {
-    //     turns.Remove(turnTaker);
-    // }
+    public void RemoveFromList(TurnTaker turnTaker)
+    {
+        int index = turns.IndexOf(turnTaker);
+        if (index == -1) return;
+
+        if (index <= currentTurn % turns.Count)
+        {
+            currentTurn--;
+        }
+
+        turns.Remove(turnTaker);
+    }
 }

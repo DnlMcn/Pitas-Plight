@@ -35,7 +35,7 @@ public static class Utilities
         return Mathf.Abs(a - b) < 0.01f;
     }
 
-    public static bool MovementIsValid(Vector3 current, Vector3 target, float maxMoveDistance)
+    public static bool MovementIsInRange(Vector3 current, Vector3 target, float maxMoveDistance)
     {
         int currentX = Mathf.RoundToInt(current.x);
         int currentZ = Mathf.RoundToInt(current.z);
