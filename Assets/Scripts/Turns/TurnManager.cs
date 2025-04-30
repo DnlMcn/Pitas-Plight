@@ -8,7 +8,7 @@ public class TurnManager : MonoBehaviour
 
     public List<TurnTaker> turns;
     private int totalTurns = 0;
-    private int currentTurn = 0;
+    private int currentTurn = -1;
 
     EventBinding<EndTurn> endTurnEventBinding;
 
@@ -44,7 +44,8 @@ public class TurnManager : MonoBehaviour
         else
         {
             // turns.Sort((a, b) => b.initiative.CompareTo(a.initiative));
-            turns[0].StartTurn();
+            // turns[0].StartTurn();
+            EventBus<EndTurn>.Raise(new());
         }
     }
 
