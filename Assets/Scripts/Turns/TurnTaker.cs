@@ -12,14 +12,17 @@ public class TurnTaker : MonoBehaviour
     {
         if (this.CompareTag("Player"))
         {
+            print("Updating active player");
             EventBus<UpdateActivePlayer>.Raise(new UpdateActivePlayer { gameObject = this.gameObject });
         }
 
+        print("Starting turn response for " + this.gameObject.name);
         startTurnResponse.Invoke();
     }
 
     public void EndTurn()
     {
+        print("Ending turn for " + this.gameObject.name);
         EventBus<EndTurn>.Raise(new());
     }
 

@@ -7,6 +7,7 @@ public class TurnManager : MonoBehaviour
     public static TurnManager Instance { get; private set; }
 
     public List<TurnTaker> turns;
+    private int totalTurns = 0;
     private int currentTurn = 0;
 
     EventBinding<EndTurn> endTurnEventBinding;
@@ -59,13 +60,16 @@ public class TurnManager : MonoBehaviour
     {
         print("End Turn Event Received!");
 
-        currentTurn += 1;
-        int turnsIndex = currentTurn % turns.Count;
+        totalTurns++;
+        currentTurn++;
+
+        // Wrap current turn back to 0
+        currentTurn = currentTurn >= turns.Count ? 0 : currentTurn;
 
         print("Current turn: " + currentTurn);
-        print("Turn index: " + turnsIndex);
+        print("Turn takers: " + turns.Count);
 
-        turns[turnsIndex].StartTurn();
+        turns[currentTurn].StartTurn();
     }
 
     // public void AddToList(TurnTaker turnTaker)
@@ -78,11 +82,16 @@ public class TurnManager : MonoBehaviour
         int index = turns.IndexOf(turnTaker);
         if (index == -1) return;
 
-        if (index <= currentTurn % turns.Count)
+        print("Removing from turns list: " + turnTaker.gameObject.name);
+        turns.Remove(turnTaker);
+
+        print("Current turn is " + currentTurn);
+        print("Turn taker is #" + index + " in the turns list");
+
+        if (index <= currentTurn)
         {
+            print("Adjusting next turn to be #" + (currentTurn - 1));
             currentTurn--;
         }
-
-        turns.Remove(turnTaker);
     }
 }

@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     private Movement movement;
     private new Camera camera;
-    private bool outOfTurn = false;
+    private bool outOfTurn = true;
     public UnityEvent endPlayerTurn;
     public int playerId;
 
@@ -92,10 +92,5 @@ public class Player : MonoBehaviour
     public float MaxMoveDistance()
     {
         return movement.maxMoveDistance;
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        print("player colliding");
     }
 }
