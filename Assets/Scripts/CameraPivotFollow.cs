@@ -1,22 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Events;
 
 public class CameraPivotFollow : MonoBehaviour
 {
     public Transform playerTransform;
 
-    EventBinding<UpdateActivePlayer> currentPlayerEvent;
 
     void OnEnable()
     {
-        currentPlayerEvent = new EventBinding<UpdateActivePlayer>(NewFollowTarget);
-        EventBus<UpdateActivePlayer>.Register(currentPlayerEvent);
+        EventBus<UpdateActivePlayer>.OnEvent += NewFollowTarget;
     }
 
     void OnDisable()
     {
-        EventBus<UpdateActivePlayer>.Deregister(currentPlayerEvent);
+        EventBus<UpdateActivePlayer>.OnEvent -= NewFollowTarget;
     }
 
     void Update()

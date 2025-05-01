@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using static Events;
 
 public class Player : MonoBehaviour
 {
@@ -14,18 +15,8 @@ public class Player : MonoBehaviour
 
     public CellsManager cellsManager;
 
-    EventBinding<EndTurn> endTurnBinding;
-
-    void OnEnable()
-    {
-        endTurnBinding = new EventBinding<EndTurn>(EndTurn);
-        EventBus<EndTurn>.Register(endTurnBinding);
-    }
-
     void OnDisable()
     {
-        EventBus<EndTurn>.Deregister(endTurnBinding);
-
         cellsManager.RemoveFromTransforms(transform);
     }
 
@@ -46,15 +37,6 @@ public class Player : MonoBehaviour
     {
         outOfTurn = false;
         print("Starting player " + playerId + "'s turn");
-    }
-
-    public void EndTurn(EndTurn evt)
-    {
-        if (!outOfTurn)
-        {
-            outOfTurn = true;
-            print("Ending player " + playerId + "'s turn");
-        }
     }
 
     public bool IsPlayerLocked()
@@ -79,6 +61,9 @@ public class Player : MonoBehaviour
                 if (gridPosition != transform.position && cellsManager.MovementIsValid(transform.position, gridPosition, movement.maxMoveDistance))
                 {
                     StartCoroutine(movement.MoveTo(gridPosition, Mathf.FloorToInt(movement.maxMoveDistance), allowAirstep: true));
+
+                    outOfTurn = true;
+                    print("Ending player " + playerId + "'s turn");
                 }
             }
         }

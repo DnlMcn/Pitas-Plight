@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Events;
 
 public class GridCellHoverHighlight : MonoBehaviour
 {
@@ -18,17 +19,14 @@ public class GridCellHoverHighlight : MonoBehaviour
     private Vector3 lastGridPosition;
     private GameObject lastSpawnedHighlight;
 
-    EventBinding<UpdateActivePlayer> updateActivePlayerBinding;
-
     void OnEnable()
     {
-        updateActivePlayerBinding = new EventBinding<UpdateActivePlayer>(UpdateActivePlayer);
-        EventBus<UpdateActivePlayer>.Register(updateActivePlayerBinding);
+        EventBus<UpdateActivePlayer>.OnEvent += UpdateActivePlayer;
     }
 
     void OnDisable()
     {
-        EventBus<UpdateActivePlayer>.Deregister(updateActivePlayerBinding);
+        EventBus<UpdateActivePlayer>.OnEvent += UpdateActivePlayer;
     }
 
     void Start()

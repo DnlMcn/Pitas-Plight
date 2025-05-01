@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Events;
 
 public class TurnManager : MonoBehaviour
 {
@@ -8,9 +9,7 @@ public class TurnManager : MonoBehaviour
 
     public List<TurnTaker> turns;
     private int totalTurns = 0;
-    private int currentTurn = -1;
-
-    EventBinding<EndTurn> endTurnEventBinding;
+    private int currentTurn = 0;
 
     void Awake()
     {
@@ -26,13 +25,12 @@ public class TurnManager : MonoBehaviour
 
     void OnEnable()
     {
-        endTurnEventBinding = new EventBinding<EndTurn>(EndTurn);
-        EventBus<EndTurn>.Register(endTurnEventBinding);
+        EventBus<EndTurn>.OnEvent += EndTurn;
     }
 
     void OnDisable()
     {
-        EventBus<EndTurn>.Deregister(endTurnEventBinding);
+        EventBus<EndTurn>.OnEvent -= EndTurn;
     }
 
     void Start()
@@ -44,8 +42,7 @@ public class TurnManager : MonoBehaviour
         else
         {
             // turns.Sort((a, b) => b.initiative.CompareTo(a.initiative));
-            // turns[0].StartTurn();
-            EventBus<EndTurn>.Raise(new());
+            turns[0].StartTurn();
         }
     }
 
