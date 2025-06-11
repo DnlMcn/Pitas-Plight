@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour
     bool isFalling = false;
 
     float fallSpeed = 5f;
-    float destroyDelay = 3f;
+    float destroyDelay = 1f;
 
     public CellsManager cellsManager;
 

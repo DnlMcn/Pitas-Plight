@@ -35,6 +35,9 @@ public class ChargerEnemy : MonoBehaviour
     public void EnemyTurn()
     {
         UpdateTargetPlayer();
+
+        if (playerTransform == null) { return; }
+
         Utilities.Wait(2);
 
         if (!isAttacking && isPreparingAttack)
@@ -192,10 +195,18 @@ public class ChargerEnemy : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (isAttacking && collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
+        if (!isAttacking)
+            return;
+
+        if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(collision.gameObject);
             EventBus<PlayerDied>.Raise(new());
+            FindAnyObjectByType<AudioManager>().Play("Hit");
+        }
+        else if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(collision.gameObject);
             FindAnyObjectByType<AudioManager>().Play("Hit");
         }
     }

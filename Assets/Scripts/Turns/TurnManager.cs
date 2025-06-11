@@ -60,7 +60,7 @@ public class TurnManager : MonoBehaviour
 
     void GameOver(PlayerDied playerDeathEvent)
     {
-        
+        gameOver = true;
     }
 
     public void EndTurn(EndTurn endTurnEvent)
@@ -89,18 +89,34 @@ public class TurnManager : MonoBehaviour
     public void RemoveFromList(TurnTaker turnTaker)
     {
         int index = turns.IndexOf(turnTaker);
-        if (index == -1) return;
-
-        print("Removing from turns list: " + turnTaker.gameObject.name);
-        turns.Remove(turnTaker);
 
         print("Current turn is " + currentTurn);
         print("Turn taker is #" + index + " in the turns list");
 
         if (index <= currentTurn)
         {
-            print("Adjusting next turn to be #" + (currentTurn - 1));
+            print("Next turn will start with #" + currentTurn);
             currentTurn--;
         }
+
+        print("Removing from turns list: " + turnTaker.gameObject.name);
+        turns.Remove(turnTaker);
+
+        if (CheckForWinState())
+        {
+            print("Raising win state event!");
+            EventBus<WinState>.Raise(new());
+            gameOver = true;
+        }
+    }
+
+    bool CheckForWinState()
+    {
+        foreach (TurnTaker t in turns)
+        {
+            if (t.CompareTag("Enemy")) { return false; }
+        }
+
+        return true;
     }
 }

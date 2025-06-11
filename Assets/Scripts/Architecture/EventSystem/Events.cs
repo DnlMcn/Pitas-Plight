@@ -10,4 +10,6 @@ public static class Events
     }
 
     public struct PlayerDied : IEvent { }
+
+    public struct WinState: IEvent { }
 }

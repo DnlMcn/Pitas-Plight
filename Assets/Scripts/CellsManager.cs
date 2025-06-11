@@ -46,14 +46,16 @@ public class CellsManager : MonoBehaviour
     {
         List<Transform> players = GetPlayerTransforms();
 
-        if (players == null) {
+        if (players.Count == 0)
+        {
             return null;
         }
 
         Transform closestTransform = players[0].transform;
         float closestDistance = Vector3.Distance(position, closestTransform.position);
 
-        for (int i = 1; i < players.Count - 1; i++) {
+        for (int i = 1; i < players.Count - 1; i++)
+        {
             Transform newTransform = players[i].transform;
             float newDistance = Vector3.Distance(position, newTransform.position);
 
