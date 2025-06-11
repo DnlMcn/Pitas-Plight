@@ -19,6 +19,8 @@ public class GridCellHoverHighlight : MonoBehaviour
     private Vector3 lastGridPosition;
     private GameObject lastSpawnedHighlight;
 
+    bool gameOver;
+
     void OnEnable()
     {
         EventBus<UpdateActivePlayer>.OnEvent += UpdateActivePlayer;
@@ -44,59 +46,65 @@ public class GridCellHoverHighlight : MonoBehaviour
 
     void Update()
     {
-        if (activePlayer.IsMoving() || !activePlayerTransform)
+        if (TurnManager.gameOver)
         {
             DestroyLastHighlight();
+            return;
         }
-        else if (activePlayerTransform)
-        {
-            Vector3 mousePosition = Input.mousePosition;
-            Ray ray = camera.ScreenPointToRay(mousePosition);
-            RaycastHit hitInfo;
 
-            Vector3 hitPoint = Vector3.zero;
-            int groundLayerMask = LayerMask.GetMask("Ground");
-
-            if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, groundLayerMask))
+        if (activePlayer.IsMoving() || !activePlayerTransform)
             {
-                hitPoint = hitInfo.point;
-                Vector3 gridPosition = Utilities.AlignToGrid(hitPoint, highlightHeight);
-
-                /// Don't show highlight on the cell the player is on
-                if (
-                    gridPosition.x == activePlayerTransform.position.x
-                    && gridPosition.z == activePlayerTransform.position.z
-                )
-                {
-                    DestroyLastHighlight();
-                }
-                else if (gridPosition != lastGridPosition)
-                {
-                    DestroyLastHighlight();
-
-                    if (!cellsManager.MovementIsValid(activePlayerTransform.position, gridPosition, activePlayer.MaxMoveDistance()) || activePlayer.IsPlayerLocked())
-                    {
-                        lastSpawnedHighlight = Instantiate(
-                            invalidCellHighlight,
-                            gridPosition,
-                            Quaternion.identity
-                        );
-                    }
-                    else
-                    {
-                        lastSpawnedHighlight = Instantiate(
-                            validCellHighlight,
-                            gridPosition,
-                            Quaternion.identity
-                        );
-                    }
-
-                    FindAnyObjectByType<AudioManager>().Play("Click");
-                }
-
-                lastGridPosition = gridPosition;
+                DestroyLastHighlight();
             }
-        }
+            else if (activePlayerTransform)
+            {
+                Vector3 mousePosition = Input.mousePosition;
+                Ray ray = camera.ScreenPointToRay(mousePosition);
+                RaycastHit hitInfo;
+
+                Vector3 hitPoint = Vector3.zero;
+                int groundLayerMask = LayerMask.GetMask("Ground");
+
+                if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, groundLayerMask))
+                {
+                    hitPoint = hitInfo.point;
+                    Vector3 gridPosition = Utilities.AlignToGrid(hitPoint, highlightHeight);
+
+                    /// Don't show highlight on the cell the player is on
+                    if (
+                        gridPosition.x == activePlayerTransform.position.x
+                        && gridPosition.z == activePlayerTransform.position.z
+                    )
+                    {
+                        DestroyLastHighlight();
+                    }
+                    else if (gridPosition != lastGridPosition)
+                    {
+                        DestroyLastHighlight();
+
+                        if (!cellsManager.MovementIsValid(activePlayerTransform.position, gridPosition, activePlayer.MaxMoveDistance()) || activePlayer.IsPlayerLocked())
+                        {
+                            lastSpawnedHighlight = Instantiate(
+                                invalidCellHighlight,
+                                gridPosition,
+                                Quaternion.identity
+                            );
+                        }
+                        else
+                        {
+                            lastSpawnedHighlight = Instantiate(
+                                validCellHighlight,
+                                gridPosition,
+                                Quaternion.identity
+                            );
+                        }
+
+                        FindAnyObjectByType<AudioManager>().Play("Click");
+                    }
+
+                    lastGridPosition = gridPosition;
+                }
+            }
     }
 
     void DestroyLastHighlight()

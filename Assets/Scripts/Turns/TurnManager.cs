@@ -11,7 +11,8 @@ public class TurnManager : MonoBehaviour
     private int totalTurns = 0;
     private int currentTurn = 0;
 
-    bool gameOver = false;
+    [HideInInspector]
+    public static bool gameOver = false;
 
     void Awake()
     {

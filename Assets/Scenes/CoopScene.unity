@@ -5253,7 +5253,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - clip: {fileID: 8300000, guid: 53469e7a04cf78341b41d49bdfd98bb3, type: 3}
     name: Hit
-    volume: 0.657
+    volume: 0.892
     pitch: 1
     source: {fileID: 0}
 --- !u!1 &1588401644
