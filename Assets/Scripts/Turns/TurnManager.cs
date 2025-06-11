@@ -11,6 +11,8 @@ public class TurnManager : MonoBehaviour
     private int totalTurns = 0;
     private int currentTurn = 0;
 
+    bool gameOver = false;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -26,11 +28,13 @@ public class TurnManager : MonoBehaviour
     void OnEnable()
     {
         EventBus<EndTurn>.OnEvent += EndTurn;
+        EventBus<PlayerDied>.OnEvent += GameOver;
     }
 
     void OnDisable()
     {
         EventBus<EndTurn>.OnEvent -= EndTurn;
+        EventBus<PlayerDied>.OnEvent -= GameOver;
     }
 
     void Start()
@@ -54,8 +58,15 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    void GameOver(PlayerDied playerDeathEvent)
+    {
+        
+    }
+
     public void EndTurn(EndTurn endTurnEvent)
     {
+        if (gameOver) return;
+
         print("End Turn Event Received!");
 
         totalTurns++;

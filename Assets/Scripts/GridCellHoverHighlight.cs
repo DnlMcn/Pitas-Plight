@@ -90,6 +90,8 @@ public class GridCellHoverHighlight : MonoBehaviour
                             Quaternion.identity
                         );
                     }
+
+                    FindAnyObjectByType<AudioManager>().Play("Click");
                 }
 
                 lastGridPosition = gridPosition;

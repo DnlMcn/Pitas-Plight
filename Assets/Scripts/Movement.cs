@@ -15,8 +15,20 @@ public class Movement : MonoBehaviour
     public float stepTime = 0.2f;
     [HideInInspector]
     public bool isMoving = false;
+    bool isFalling = false;
+
+    float fallSpeed = 5f;
+    float destroyDelay = 3f;
 
     public CellsManager cellsManager;
+
+    void Update()
+    {
+        if (isFalling)
+        {
+            transform.Translate(fallSpeed * Time.deltaTime * Vector3.down, Space.World);
+        }
+    }
 
     public IEnumerator MoveTo(Vector3 newTargetPosition, int limit, bool allowAirstep = false, bool endsTurn = true)
     {
@@ -125,6 +137,8 @@ public class Movement : MonoBehaviour
     {
         float elapsedTime = 0;
 
+        FindAnyObjectByType<AudioManager>().Play("Step");
+
         while (elapsedTime < stepTime)
         {
             transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / stepTime);
@@ -150,8 +164,16 @@ public class Movement : MonoBehaviour
 
         if (!IsGrounded())
         {
-            Destroy(gameObject);
+            isFalling = true;
+            StartCoroutine(FallAndDestroy());
         }
+    }
+
+    private IEnumerator FallAndDestroy()
+    {
+        FindAnyObjectByType<AudioManager>().Play("Fall");
+        yield return new WaitForSeconds(destroyDelay);
+        Destroy(gameObject);
     }
 
     public Vector3 Position()

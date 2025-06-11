@@ -67,6 +67,7 @@ public class ChargerEnemy : MonoBehaviour
         isPreparingAttack = false;
         isAttacking = true;
         yield return StartCoroutine(movement.ChargeInDirection(attackDirection, Mathf.RoundToInt(chargeDistance), chargeStepDuration));
+        FindAnyObjectByType<AudioManager>().Play("ChargerDash");
         isAttacking = false;
     }
 
@@ -194,6 +195,8 @@ public class ChargerEnemy : MonoBehaviour
         if (isAttacking && collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(collision.gameObject);
+            EventBus<PlayerDied>.Raise(new());
+            FindAnyObjectByType<AudioManager>().Play("Hit");
         }
     }
 
