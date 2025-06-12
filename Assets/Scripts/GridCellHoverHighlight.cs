@@ -19,8 +19,6 @@ public class GridCellHoverHighlight : MonoBehaviour
     private Vector3 lastGridPosition;
     private GameObject lastSpawnedHighlight;
 
-    bool gameOver;
-
     void OnEnable()
     {
         EventBus<UpdateActivePlayer>.OnEvent += UpdateActivePlayer;

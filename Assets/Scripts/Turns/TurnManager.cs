@@ -24,6 +24,8 @@ public class TurnManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        gameOver = false;
     }
 
     void OnEnable()
